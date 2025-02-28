@@ -460,13 +460,8 @@ footer {
         overflow: hidden;
     }
 
-    /* 隱藏 canvas，只使用 video 元素 */
-    #output-canvas {
-        display: none;
-    }
-
-    /* 設置 video 元素樣式 */
-    #video {
+    /* 統一 video 和 canvas 的樣式 */
+    #video, #output-canvas {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -487,7 +482,7 @@ footer {
             max-height: calc(100vh - 80px);
         }
 
-        #video {
+        #video, #output-canvas {
             position: absolute;
             top: 50%;
             left: 50%;
