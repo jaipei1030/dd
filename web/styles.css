@@ -431,6 +431,10 @@ footer {
 @media (max-width: 768px) {
     body {
         overflow: hidden;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
     }
 
     .camera-section {
@@ -443,25 +447,26 @@ footer {
         position: fixed;
         top: 0;
         left: 0;
-        background: #000;
+        display: flex;
+        flex-direction: column;
     }
 
     .camera-container {
-        position: absolute;
-        top: 0;
-        left: 0;
+        position: relative;
         width: 100%;
-        height: calc(100% - 150px); /* 留出底部空間 */
+        flex: 1;
+        overflow: hidden;
+        background: #000;
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
     }
 
     #video {
+        position: absolute;
         width: 100%;
         height: 100%;
-        object-fit: contain; /* 改為 contain 以保持比例 */
+        object-fit: contain; /* 改用 contain 保持比例 */
         transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
     }
@@ -472,28 +477,21 @@ footer {
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: contain; /* 改為 contain 以保持比例 */
+        object-fit: contain; /* 改用 contain 保持比例 */
         transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
         z-index: 2;
     }
 
     .control-section {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        position: relative; /* 改為相對定位 */
         width: 100%;
-        height: 150px; /* 增加高度 */
         padding: 15px;
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
-        display: flex;
-        flex-direction: column; /* 改為垂直排列 */
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
         z-index: 1000;
+        flex-shrink: 0; /* 防止收縮 */
+        height: auto; /* 自適應高度 */
     }
 
     .btn-group {
@@ -573,16 +571,24 @@ footer {
 @supports (-webkit-touch-callout: none) {
     @media screen and (max-width: 768px) {
         .camera-container {
-            height: calc(100% - 150px - env(safe-area-inset-bottom));
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9/16; /* 強制設置比例 */
+            max-height: calc(100vh - 180px); /* 預留控制區域空間 */
+        }
+
+        #video, #output-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .control-section {
-            height: calc(150px + env(safe-area-inset-bottom));
+            position: relative;
             padding-bottom: calc(15px + env(safe-area-inset-bottom));
-        }
-
-        .options-menu {
-            bottom: calc(150px + env(safe-area-inset-bottom));
         }
     }
 }
