@@ -431,10 +431,6 @@ footer {
 @media (max-width: 768px) {
     body {
         overflow: hidden;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        width: 100vw;
     }
 
     .camera-section {
@@ -447,52 +443,53 @@ footer {
         position: fixed;
         top: 0;
         left: 0;
-        display: flex;
-        flex-direction: column;
+        background: var(--card-background);
     }
 
     .camera-container {
         position: relative;
         width: 100%;
-        flex: 1;
-        overflow: hidden;
-        background: #000;
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
     }
 
     #video {
-        position: absolute;
-        width: 100%;
+        width: auto; /* 讓寬度自動調整 */
         height: 100%;
-        object-fit: contain; /* 使用 contain 來保持比例 */
+        max-width: 100%;
         transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
+        object-fit: contain;
     }
 
     #output-canvas {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
+        width: auto; /* 讓寬度自動調整 */
         height: 100%;
-        object-fit: contain; /* 使用 contain 來保持比例 */
+        max-width: 100%;
         transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
+        object-fit: contain;
         z-index: 2;
     }
 
     .control-section {
-        position: relative; /* 改為相對定位 */
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
         width: 100%;
-        min-height: 80px; /* 使用最小高度 */
         padding: 15px;
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         display: flex;
         justify-content: center;
-        align-items: center;
+        gap: 10px;
         z-index: 1000;
     }
 
@@ -574,14 +571,11 @@ footer {
         .camera-container {
             position: relative;
             width: 100%;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 100%;
         }
 
         #video, #output-canvas {
-            width: auto; /* 讓寬度自動計算 */
+            width: auto;
             height: 100%;
             max-width: 100%;
             object-fit: contain;
