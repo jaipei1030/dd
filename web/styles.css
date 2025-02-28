@@ -127,23 +127,23 @@ main {
     align-items: center;
     justify-content: center;
     background: var(--card-background);
-    padding: 25px;
-    border-radius: 30px;
-    box-shadow: var(--shadow-lg);
-    width: calc(100vw - 600px);
-    height: calc(100vh - 300px);
-    margin: 40px 300px 40px 40px;
+    padding: 0; /* 移除內邊距 */
+    border-radius: 0; /* 移除圓角 */
+    box-shadow: none; /* 移除陰影 */
+    width: 100vw; /* 使用全螢幕寬度 */
+    height: 100vh; /* 使用全螢幕高度 */
+    margin: 0; /* 移除邊距 */
     position: relative;
     overflow: hidden;
 }
 
 .control-section {
-    position: fixed;  /* 改為固定定位 */
-    right: 40px;     /* 增加與即時影像的距離 */
-    bottom: 20px;    /* 距離底部的距離 */
-    width: 230px;
-    padding: 15px;
-    z-index: 100;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    z-index: 1000;
 }
 
 .btn-group {
@@ -195,21 +195,14 @@ main {
 
 .options-menu {
     position: fixed;
-    right: 155px;    /* 40px(右邊距) + 115px(按鈕寬度的一半) */
-    top: 50%;
-    transform: translate(50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    padding: 15px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-height: 90vh;
-    overflow-y: auto;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
     z-index: 1000;
-    width: 230px;
 }
 
 .camera-container {
@@ -220,40 +213,45 @@ main {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    aspect-ratio: 16/9;
 }
 
 #video {
-    position: absolute;
     width: 100%;
     height: 100%;
+    object-fit: cover; /* 改用 cover 以填滿螢幕 */
     transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
-    object-fit: contain;
-    border-radius: 20px;
-    aspect-ratio: 16/9;
 }
 
 #output-canvas {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
-    object-fit: contain;
-    border-radius: 20px;
+    object-fit: cover; /* 改用 cover 以填滿螢幕 */
     z-index: 2;
     pointer-events: none;
-    aspect-ratio: 16/9;
 }
 
 /* iOS 特定樣式 */
 @supports (-webkit-touch-callout: none) {
+    .camera-section {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
     .camera-container {
-        position: relative;
-        width: 100%;
-        padding-top: 56.25%; /* 16:9 比例 */
-        height: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
 
     #video, #output-canvas {
@@ -262,9 +260,7 @@ main {
         left: 0;
         width: 100%;
         height: 100%;
-        transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-        object-fit: contain;
+        object-fit: cover;
     }
 }
 
