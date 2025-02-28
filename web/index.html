@@ -859,6 +859,16 @@
             try {
                 setupCanvas();
 
+                // 設置視訊元素屬性（iOS 支援）
+                video.setAttribute('playsinline', '');
+                video.setAttribute('webkit-playsinline', '');
+                video.setAttribute('autoplay', '');
+                video.setAttribute('muted', '');
+                
+                // 設置固定尺寸
+                video.width = 1280;
+                video.height = 720;
+                
                 // 初始化 MediaPipe Camera
                 const camera = new Camera(video, {
                     onFrame: async () => {
@@ -867,12 +877,6 @@
                     width: 1280,
                     height: 720
                 });
-
-                // 設置視訊元素屬性（iOS 支援）
-                video.setAttribute('playsinline', '');
-                video.setAttribute('webkit-playsinline', '');
-                video.setAttribute('autoplay', '');
-                video.setAttribute('muted', '');
                 
                 // 確保視訊元素正確顯示
                 video.style.display = 'block';
