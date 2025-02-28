@@ -433,22 +433,95 @@ footer {
         padding: 15px;
     }
     .camera-section {
-        padding: 10px;
-        width: calc(100vw - 40px);
-        height: calc(100vh - 340px);
-        margin: 20px;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+        position: fixed;
+        top: 0;
+        left: 0;
     }
     .camera-container {
-        transform: scale(0.6);
-        max-height: calc(100% - 20px);
+        position: relative;
+        width: 100%;
+        height: calc(100% - 80px); /* 減去底部按鈕的高度 */
+        overflow: hidden;
     }
-    .options-menu {
-        right: 120px;  /* 調整小螢幕上的位置 */
-        width: 200px;
+    #video, #output-canvas {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     .control-section {
-        right: 20px;
-        bottom: 10px;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 80px; /* 固定高度 */
+        padding: 10px 15px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        z-index: 1000;
+    }
+    .btn-group {
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 400px;
+        margin: 0;
+        padding: 0;
+    }
+    .btn {
+        flex: 1;
+        padding: 12px;
+        margin: 0;
+        font-size: 14px;
+        text-align: center;
+        justify-content: center;
+        height: 45px; /* 固定按鈕高度 */
+        display: flex;
+        align-items: center;
+    }
+    .options-menu {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 80px; /* 與底部按鈕保持距離 */
+        height: auto;
+        max-height: 50vh; /* 最大高度為螢幕高度的一半 */
+        transform: none;
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 999;
+    }
+    .acupoint-title {
+        top: 40px;
+        z-index: 1001;
+    }
+    .palm-guide {
+        top: 100px;
+        z-index: 1001;
+    }
+    .timer, .massage-complete {
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1001;
+    }
+    .symptom-list, #meridian-options {
+        padding: 20px 15px;
+        padding-bottom: calc(15px + env(safe-area-inset-bottom));
+        margin-bottom: 0;
     }
     .logo {
         font-size: 2rem;
@@ -465,6 +538,24 @@ footer {
 
     #meridian-options {
         max-width: 200px;  /* 在小螢幕上減少寬度 */
+    }
+}
+
+/* iOS 特定樣式優化 */
+@supports (-webkit-touch-callout: none) {
+    @media screen and (max-width: 768px) {
+        .camera-container {
+            height: calc(100% - 80px - env(safe-area-inset-bottom));
+        }
+
+        .control-section {
+            padding-bottom: calc(10px + env(safe-area-inset-bottom));
+            height: calc(80px + env(safe-area-inset-bottom));
+        }
+
+        .options-menu {
+            bottom: calc(80px + env(safe-area-inset-bottom));
+        }
     }
 }
 
