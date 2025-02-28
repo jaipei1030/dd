@@ -78,7 +78,7 @@
                     <div class="options-title">症狀選擇</div>
                     <button class="option-btn">疲勞</button>
                     <button class="option-btn">頭痛</button>
-                    <button class="option-btn">頭暈</button>
+                    <!-- <button class="option-btn">頭暈</button> -->
                     <button class="option-btn" data-acupoint="魚際穴" data-location="yujixue">哮喘</button>
                     <button class="option-btn">經痛</button>
                     <button class="option-btn">牙齒痛</button>
@@ -880,17 +880,34 @@
 
                 // 確保視訊元素正確顯示
                 const maintainAspectRatio = () => {
-                    video.style.width = '100%';
-                    video.style.height = '100%';
-                    video.style.objectFit = 'contain';
-                    video.style.aspectRatio = '16/9';
+                    requestAnimationFrame(() => {
+                        const containerWidth = video.parentElement.clientWidth;
+                        const containerHeight = video.parentElement.clientHeight;
+                        const containerRatio = containerWidth / containerHeight;
+                        const videoRatio = 16/9;
+
+                        if (containerRatio > videoRatio) {
+                            // 容器較寬，以高度為基準
+                            const height = containerHeight;
+                            const width = height * videoRatio;
+                            video.style.width = `${width}px`;
+                            video.style.height = `${height}px`;
+                        } else {
+                            // 容器較高，以寬度為基準
+                            const width = containerWidth;
+                            const height = width / videoRatio;
+                            video.style.width = `${width}px`;
+                            video.style.height = `${height}px`;
+                        }
+                    });
                 };
 
-                // 立即設置
+                // 立即設置並持續監控
                 maintainAspectRatio();
+                window.addEventListener('resize', maintainAspectRatio);
                 
-                // 監聽視訊大小變化
-                new ResizeObserver(maintainAspectRatio).observe(video);
+                // 定期檢查並修正比例
+                setInterval(maintainAspectRatio, 1000);
                 
                 // 啟動相機
                 await camera.start();
