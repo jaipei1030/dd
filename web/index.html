@@ -880,32 +880,31 @@
 
                 // 確保視訊元素正確顯示
                 const maintainAspectRatio = () => {
-                    requestAnimationFrame(() => {
-                        const container = document.querySelector('.camera-container');
-                        const containerWidth = container.offsetWidth;
-                        const containerHeight = container.offsetHeight;
-                        const videoAspectRatio = 16/9;
-                        const containerAspectRatio = containerWidth / containerHeight;
-
-                        if (containerAspectRatio > videoAspectRatio) {
-                            // 容器較寬，以高度為基準
-                            const height = containerHeight;
-                            const width = height * videoAspectRatio;
-                            video.style.width = `${width}px`;
-                            video.style.height = `${height}px`;
-                        } else {
-                            // 容器較高，以寬度為基準
-                            const width = containerWidth;
-                            const height = width / videoAspectRatio;
-                            video.style.width = `${width}px`;
-                            video.style.height = `${height}px`;
-                        }
-                    });
+                    const container = document.querySelector('.camera-container');
+                    const containerWidth = container.offsetWidth;
+                    const containerHeight = container.offsetHeight;
+                    
+                    // 強制設置容器比例
+                    container.style.height = `${containerWidth * (9/16)}px`;
+                    
+                    // 設置視訊元素尺寸
+                    video.style.width = '100%';
+                    video.style.height = '100%';
+                    
+                    // 設置 canvas 尺寸
+                    const canvas = document.getElementById('output-canvas');
+                    canvas.style.width = '100%';
+                    canvas.style.height = '100%';
                 };
 
-                // 立即設置並持續監控
+                // 立即設置
                 maintainAspectRatio();
-                setInterval(maintainAspectRatio, 100); // 每 100ms 檢查一次
+                
+                // 添加 resize 事件監聽
+                window.addEventListener('resize', maintainAspectRatio);
+                
+                // 定期檢查並修正比例
+                const aspectRatioInterval = setInterval(maintainAspectRatio, 100);
                 
                 // 啟動相機
                 await camera.start();
