@@ -447,32 +447,33 @@ footer {
         position: fixed;
         top: 0;
         left: 0;
-        background: #000;
+        background: var(--background-color);
     }
 
     .camera-container {
         position: relative;
         width: 100%;
         height: calc(100% - 80px); /* 減去控制區域的高度 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
         overflow: hidden;
     }
 
-    /* 完全隱藏視訊元素 */
+    /* 隱藏原始視訊元素 */
     #video {
         display: none !important;
     }
 
-    /* 只顯示 canvas 元素並保持比例 */
+    /* 只顯示 canvas 元素並保持原始比例 */
     #output-canvas {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scaleX(-1);
-        -webkit-transform: translate(-50%, -50%) scaleX(-1);
         width: auto;
         height: 100%;
         max-width: 100%;
         object-fit: contain;
+        transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
     }
 
     .control-section {
@@ -482,52 +483,38 @@ footer {
         bottom: 0;
         width: 100%;
         height: 80px;
+        padding: 15px;
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         z-index: 1000;
     }
 
-    .btn-group {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        gap: 10px;
-        padding: 0 20px;
-    }
-
-    .btn {
-        flex: 1;
-        max-width: 150px;
-        height: 45px;
-        font-size: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px;
-        background: var(--primary-color);
-        color: white;
-    }
-
-    .options-menu {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 150px; /* 配合新的控制區域高度 */
-        max-height: 40vh;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 20px 20px 0 0;
-        z-index: 999;
-        overflow-y: auto;
-    }
-
+    /* 恢復標題樣式 */
     .acupoint-title {
+        position: fixed;
         top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(43, 45, 66, 0.9);
+        color: white;
+        padding: 12px 24px;
+        border-radius: var(--border-radius);
+        backdrop-filter: blur(8px);
+        z-index: 1001;
+        display: block;
     }
 
     .palm-guide {
+        position: fixed;
         top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(43, 45, 66, 0.9);
+        color: white;
+        padding: 12px 24px;
+        border-radius: var(--border-radius);
+        backdrop-filter: blur(8px);
+        z-index: 1001;
     }
 
     .timer, .massage-complete {
@@ -560,7 +547,7 @@ footer {
     }
 }
 
-/* iOS 特定樣式優化 */
+/* iOS 特定樣式 */
 @supports (-webkit-touch-callout: none) {
     @media screen and (max-width: 768px) {
         .camera-container {
@@ -569,14 +556,12 @@ footer {
 
         #output-canvas {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scaleX(-1);
-            -webkit-transform: translate(-50%, -50%) scaleX(-1);
             width: auto;
             height: 100%;
             max-width: 100%;
             object-fit: contain;
+            transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
         }
     }
 }
