@@ -448,57 +448,43 @@ footer {
         top: 0;
         left: 0;
         background: #000;
-        display: flex;
-        flex-direction: column;
     }
 
     .camera-container {
         position: relative;
         width: 100%;
-        height: calc(100% - 80px);
+        height: calc(100% - 80px); /* 減去控制區域的高度 */
         overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 
-    /* 統一 video 和 canvas 的樣式 */
-    #video, #output-canvas {
+    /* 完全隱藏視訊元素 */
+    #video {
+        display: none !important;
+    }
+
+    /* 只顯示 canvas 元素並保持比例 */
+    #output-canvas {
         position: absolute;
-        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scaleX(-1);
+        -webkit-transform: translate(-50%, -50%) scaleX(-1);
+        width: auto;
         height: 100%;
-        object-fit: cover; /* 改用 cover 來填滿容器 */
-        transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-    }
-
-    /* iOS 特定樣式 */
-    @supports (-webkit-touch-callout: none) {
-        .camera-container {
-            position: relative;
-            width: 100%;
-            height: calc(100% - 80px);
-        }
-
-        #video, #output-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        max-width: 100%;
+        object-fit: contain;
     }
 
     .control-section {
-        position: relative;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
         width: 100%;
         height: 80px;
-        padding: 15px;
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         z-index: 1000;
-        flex-shrink: 0;
     }
 
     .btn-group {
@@ -574,15 +560,23 @@ footer {
     }
 }
 
-/* 處理 iOS 安全區域 */
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
+/* iOS 特定樣式優化 */
+@supports (-webkit-touch-callout: none) {
     @media screen and (max-width: 768px) {
-        .control-section {
-            padding-bottom: calc(15px + env(safe-area-inset-bottom));
+        .camera-container {
+            height: calc(100% - 80px - env(safe-area-inset-bottom));
         }
 
-        .options-menu {
-            padding-bottom: calc(15px + env(safe-area-inset-bottom));
+        #output-canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scaleX(-1);
+            -webkit-transform: translate(-50%, -50%) scaleX(-1);
+            width: auto;
+            height: 100%;
+            max-width: 100%;
+            object-fit: contain;
         }
     }
 }
@@ -893,5 +887,18 @@ footer {
     .btn {
         font-size: 12px;
         padding: 10px;
+    }
+}
+
+/* 處理 iOS 安全區域 */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    @media screen and (max-width: 768px) {
+        .control-section {
+            padding-bottom: calc(15px + env(safe-area-inset-bottom));
+        }
+
+        .options-menu {
+            padding-bottom: calc(15px + env(safe-area-inset-bottom));
+        }
     }
 } 
