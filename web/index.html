@@ -881,21 +881,22 @@
                 // 確保視訊元素正確顯示
                 const maintainAspectRatio = () => {
                     requestAnimationFrame(() => {
-                        const containerWidth = video.parentElement.clientWidth;
-                        const containerHeight = video.parentElement.clientHeight;
-                        const containerRatio = containerWidth / containerHeight;
-                        const videoRatio = 16/9;
+                        const container = document.querySelector('.camera-container');
+                        const containerWidth = container.offsetWidth;
+                        const containerHeight = container.offsetHeight;
+                        const videoAspectRatio = 16/9;
+                        const containerAspectRatio = containerWidth / containerHeight;
 
-                        if (containerRatio > videoRatio) {
+                        if (containerAspectRatio > videoAspectRatio) {
                             // 容器較寬，以高度為基準
                             const height = containerHeight;
-                            const width = height * videoRatio;
+                            const width = height * videoAspectRatio;
                             video.style.width = `${width}px`;
                             video.style.height = `${height}px`;
                         } else {
                             // 容器較高，以寬度為基準
                             const width = containerWidth;
-                            const height = width / videoRatio;
+                            const height = width / videoAspectRatio;
                             video.style.width = `${width}px`;
                             video.style.height = `${height}px`;
                         }
@@ -904,10 +905,7 @@
 
                 // 立即設置並持續監控
                 maintainAspectRatio();
-                window.addEventListener('resize', maintainAspectRatio);
-                
-                // 定期檢查並修正比例
-                setInterval(maintainAspectRatio, 1000);
+                setInterval(maintainAspectRatio, 100); // 每 100ms 檢查一次
                 
                 // 啟動相機
                 await camera.start();
