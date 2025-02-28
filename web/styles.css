@@ -447,74 +447,95 @@ footer {
         position: fixed;
         top: 0;
         left: 0;
-        background: var(--background-color);
+        display: flex;
+        flex-direction: column;
     }
 
     .camera-container {
         position: relative;
         width: 100%;
-        height: calc(100% - 80px); /* 減去控制區域的高度 */
+        flex: 1;
+        overflow: hidden;
+        background: #000;
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
     }
 
-    /* 隱藏原始視訊元素 */
     #video {
-        display: none !important;
-    }
-
-    /* 只顯示 canvas 元素並保持原始比例 */
-    #output-canvas {
         position: absolute;
-        width: auto;
+        width: 100%;
         height: 100%;
-        max-width: 100%;
-        object-fit: contain;
+        object-fit: contain; /* 使用 contain 來保持比例 */
         transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
     }
 
-    .control-section {
-        position: fixed;
+    #output-canvas {
+        position: absolute;
+        top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
         width: 100%;
-        height: 80px;
+        height: 100%;
+        object-fit: contain; /* 使用 contain 來保持比例 */
+        transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        z-index: 2;
+    }
+
+    .control-section {
+        position: relative; /* 改為相對定位 */
+        width: 100%;
+        min-height: 80px; /* 使用最小高度 */
         padding: 15px;
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
         z-index: 1000;
     }
 
-    /* 恢復標題樣式 */
-    .acupoint-title {
+    .options-menu {
         position: fixed;
-        top: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: rgba(43, 45, 66, 0.9);
+        left: 0;
+        right: 0;
+        bottom: 80px;
+        max-height: 40vh;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px 20px 0 0;
+        z-index: 999;
+    }
+
+    .btn-group {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 10px;
+        padding: 0 20px;
+    }
+
+    .btn {
+        flex: 1;
+        max-width: 150px;
+        height: 45px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: var(--primary-color);
         color: white;
-        padding: 12px 24px;
-        border-radius: var(--border-radius);
-        backdrop-filter: blur(8px);
-        z-index: 1001;
-        display: block;
+    }
+
+    .acupoint-title {
+        top: 40px;
     }
 
     .palm-guide {
-        position: fixed;
         top: 100px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: rgba(43, 45, 66, 0.9);
-        color: white;
-        padding: 12px 24px;
-        border-radius: var(--border-radius);
-        backdrop-filter: blur(8px);
-        z-index: 1001;
     }
 
     .timer, .massage-complete {
@@ -551,17 +572,27 @@ footer {
 @supports (-webkit-touch-callout: none) {
     @media screen and (max-width: 768px) {
         .camera-container {
-            height: calc(100% - 80px - env(safe-area-inset-bottom));
+            position: relative;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        #output-canvas {
-            position: absolute;
-            width: auto;
+        #video, #output-canvas {
+            width: auto; /* 讓寬度自動計算 */
             height: 100%;
             max-width: 100%;
             object-fit: contain;
-            transform: scaleX(-1);
-            -webkit-transform: scaleX(-1);
+        }
+
+        .control-section {
+            padding-bottom: calc(15px + env(safe-area-inset-bottom));
+        }
+
+        .options-menu {
+            bottom: calc(80px + env(safe-area-inset-bottom));
         }
     }
 }
