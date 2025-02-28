@@ -449,49 +449,44 @@ footer {
         left: 0;
         display: flex;
         flex-direction: column;
+        background: #000;
     }
 
     .camera-container {
         position: relative;
         width: 100%;
-        flex: 1;
-        overflow: hidden;
-        background: #000;
+        height: calc(100% - 80px);
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
     }
 
+    /* 隱藏原始視訊元素 */
     #video {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: contain; /* 改用 contain 保持比例 */
-        transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
+        display: none;
     }
 
+    /* 只顯示 canvas 元素 */
     #output-canvas {
         position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
         height: 100%;
-        object-fit: contain; /* 改用 contain 保持比例 */
+        object-fit: contain;
         transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
         z-index: 2;
     }
 
     .control-section {
-        position: relative; /* 改為相對定位 */
+        position: relative;
         width: 100%;
+        height: 80px;
         padding: 15px;
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         z-index: 1000;
-        flex-shrink: 0; /* 防止收縮 */
-        height: auto; /* 自適應高度 */
+        flex-shrink: 0;
     }
 
     .btn-group {
@@ -573,22 +568,19 @@ footer {
         .camera-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 9/16; /* 強制設置比例 */
-            max-height: calc(100vh - 180px); /* 預留控制區域空間 */
+            aspect-ratio: 9/16;
+            max-height: calc(100vh - 80px);
         }
 
-        #video, #output-canvas {
+        #output-canvas {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scaleX(-1);
+            -webkit-transform: translate(-50%, -50%) scaleX(-1);
+            width: auto;
             height: 100%;
-            object-fit: contain;
-        }
-
-        .control-section {
-            position: relative;
-            padding-bottom: calc(15px + env(safe-area-inset-bottom));
+            max-width: 100%;
         }
     }
 }
