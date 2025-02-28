@@ -220,6 +220,7 @@ main {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    aspect-ratio: 16/9;
 }
 
 #video {
@@ -230,6 +231,7 @@ main {
     -webkit-transform: scaleX(-1);
     object-fit: contain;
     border-radius: 20px;
+    aspect-ratio: 16/9;
 }
 
 #output-canvas {
@@ -242,6 +244,7 @@ main {
     border-radius: 20px;
     z-index: 2;
     pointer-events: none;
+    aspect-ratio: 16/9;
 }
 
 /* iOS 特定樣式 */
@@ -249,11 +252,14 @@ main {
     .camera-container {
         position: relative;
         width: 100%;
-        height: 100%;
+        padding-top: 56.25%; /* 16:9 比例 */
+        height: 0;
     }
 
     #video, #output-canvas {
         position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         transform: scaleX(-1);

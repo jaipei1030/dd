@@ -879,9 +879,18 @@
                 });
 
                 // 確保視訊元素正確顯示
-                video.style.width = '100%';
-                video.style.height = '100%';
-                video.style.objectFit = 'contain';
+                const maintainAspectRatio = () => {
+                    video.style.width = '100%';
+                    video.style.height = '100%';
+                    video.style.objectFit = 'contain';
+                    video.style.aspectRatio = '16/9';
+                };
+
+                // 立即設置
+                maintainAspectRatio();
+                
+                // 監聽視訊大小變化
+                new ResizeObserver(maintainAspectRatio).observe(video);
                 
                 // 啟動相機
                 await camera.start();
