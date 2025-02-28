@@ -877,10 +877,11 @@
                     width: 1280,
                     height: 720
                 });
-                
+
                 // 確保視訊元素正確顯示
-                video.style.display = 'block';
-                video.style.opacity = '1';
+                video.style.width = '100%';
+                video.style.height = '100%';
+                video.style.objectFit = 'contain';
                 
                 // 啟動相機
                 await camera.start();

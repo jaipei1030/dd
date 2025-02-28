@@ -215,37 +215,30 @@ main {
 .camera-container {
     position: relative;
     width: 100%;
-    max-width: 1280px;  /* 設定最大寬度 */
-    max-height: 720px;  /* 設定最大高度 */
-    margin: auto;
-    overflow: hidden;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    aspect-ratio: 16/9;  /* 強制 16:9 比例 */
+    overflow: hidden;
 }
 
 #video {
     position: absolute;
-    top: 50%;
-    left: 50%;
     width: 100%;
     height: 100%;
-    transform: translate(-50%, -50%) scaleX(-1);
-    -webkit-transform: translate(-50%, -50%) scaleX(-1);
-    object-fit: contain;  /* 保持比例 */
+    transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    object-fit: contain;
     border-radius: 20px;
 }
 
 #output-canvas {
     position: absolute;
-    top: 50%;
-    left: 50%;
     width: 100%;
     height: 100%;
-    transform: translate(-50%, -50%) scaleX(-1);
-    -webkit-transform: translate(-50%, -50%) scaleX(-1);
-    object-fit: contain;  /* 保持比例 */
+    transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    object-fit: contain;
     border-radius: 20px;
     z-index: 2;
     pointer-events: none;
@@ -254,18 +247,13 @@ main {
 /* iOS 特定樣式 */
 @supports (-webkit-touch-callout: none) {
     .camera-container {
+        position: relative;
         width: 100%;
-        height: 0;
-        padding-bottom: 56.25%;  /* 16:9 比例 */
-        max-height: none;
+        height: 100%;
     }
 
     #video, #output-canvas {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
         width: 100%;
         height: 100%;
         transform: scaleX(-1);
